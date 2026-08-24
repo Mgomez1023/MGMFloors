@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Portfolio — MGM Floors LLC | Chicago, IL</title>
+  <meta name="description" content="Explore recent MGM Floors projects, organized by property and photographed from multiple angles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Portfolio-only project grouping and carousel presentation */
+    .portfolio-project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .project-card {
+      min-width: 0;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--taupe);
+      border-radius: 2px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .project-carousel {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--cream-mid);
+    }
+
+    .project-carousel:focus-visible {
+      outline: 3px solid var(--mgm-blue);
+      outline-offset: 4px;
+    }
+
+    .project-carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    .project-carousel-button {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 50%;
+      background: rgba(20, 35, 55, 0.76);
+      color: #fff;
+      font-size: 1.75rem;
+      line-height: 1;
+      transform: translateY(-50%);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .project-carousel-button:hover {
+      background: var(--mgm-blue-dark);
+    }
+
+    .project-carousel-button:focus-visible,
+    .project-dot:focus-visible {
+      outline: 3px solid var(--wood-light);
+      outline-offset: 3px;
+    }
+
+    .project-carousel-button--prev {
+      left: 1rem;
+    }
+
+    .project-carousel-button--next {
+      right: 1rem;
+    }
+
+    .project-counter {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 2;
+      min-width: 3.5rem;
+      padding: 0.35rem 0.65rem;
+      background: rgba(20, 35, 55, 0.78);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .project-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 1rem;
+      z-index: 2;
+      display: flex;
+      gap: 0.45rem;
+      padding: 0.45rem 0.6rem;
+      background: rgba(20, 35, 55, 0.62);
+      transform: translateX(-50%);
+    }
+
+    .project-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .project-dot[aria-current="true"] {
+      background: #fff;
+    }
+
+    .project-card-body {
+      padding: clamp(1.35rem, 2.5vw, 2rem);
+      border-top: 4px solid var(--mgm-blue);
+    }
+
+    .project-card-title {
+      margin-bottom: 0.4rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 2.8vw, 2.25rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--charcoal);
+    }
+
+    .project-confirmation {
+      color: var(--charcoal-light);
+      font-size: 0.82rem;
+      font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
+    .portfolio-project-grid {
+      scroll-margin-top: calc(var(--nav-height) + 1.5rem);
+    }
+
+    .project-card[hidden] {
+      display: none;
+    }
+
+    .project-card--revealing {
+      animation: project-card-reveal 0.4s var(--ease-out) both;
+    }
+
+    .portfolio-project-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .portfolio-project-toggle-wrap[hidden],
+    .portfolio-project-toggle[hidden] {
+      display: none;
+    }
+
+    .portfolio-project-toggle {
+      border: 0;
+    }
+
+    @keyframes project-card-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card--revealing {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .portfolio-project-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+      }
+
+      .project-carousel {
+        aspect-ratio: 4 / 3;
+      }
+
+      .project-carousel-button {
+        width: 42px;
+        height: 42px;
+      }
+
+      .project-carousel-button--prev {
+        left: 0.75rem;
+      }
+
+      .project-carousel-button--next {
+        right: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar" class="navbar scrolled">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo" id="nav-logo-link" aria-label="MGM Floors home">
+        <img src="assets/Logo-transparent.png" alt="MGM Floors LLC Logo" class="nav-logo-img" />
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="portfolio.html" class="nav-link active-nav">Gallery</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#contact" class="nav-cta">Get a Quote</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== SUBPAGE HERO ===== -->
+  <header class="page-hero">
+    <div class="container">
+      <p class="section-eyebrow" style="color: var(--wood-light);">Craftsmanship Gallery</p>
+      <h1 class="page-hero-title">Our Project <em>Portfolio</em></h1>
+      <p class="page-hero-sub">Explore recent MGM Floors projects, organized by property so you can view each transformation from multiple angles.</p>
+    </div>
+  </header>
+
+  <!-- ===== PORTFOLIO PROJECTS ===== -->
+  <section class="section-padding section-alt" aria-label="MGM Floors projects">
+    <div class="container">
+      <div class="portfolio-project-grid" id="portfolio-project-grid"></div>
+      <div class="portfolio-project-toggle-wrap" id="portfolio-project-toggle-wrap" hidden>
+        <button class="btn btn-primary portfolio-project-toggle" id="portfolio-project-toggle" type="button" aria-expanded="false" aria-controls="portfolio-project-grid">View All Projects</button>
+      </div>
+      <noscript>
+        <p class="section-desc" style="text-align: center;">Enable JavaScript to view the project photo collections.</p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- ===== CTA STRIP ===== -->
+  <section class="stats-strip" style="text-align: center; padding: 4rem 0;">
+    <div class="container">
+      <h2 style="font-family: var(--font-display); color: #fff; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">Ready to Start Your Project?</h2>
+      <p style="color: rgba(255,255,255,0.85); max-width: 550px; margin: 0 auto 2rem;">Get in touch with our team for a free in-home estimate or consultation.</p>
+      <a href="index.html#contact" class="btn btn-white">Request a Consultation</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-layout">
+      <div class="footer-brand">
+        <img src="assets/Logo.png" alt="MGM Floors LLC" class="footer-logo" />
+        <p class="footer-tagline">Premium floors. Lasting impressions.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html#services" class="footer-link">Services</a>
+        <a href="portfolio.html" class="footer-link">Gallery</a>
+        <a href="index.html#about" class="footer-link">About</a>
+        <a href="index.html#contact" class="footer-link">Contact</a>
+      </nav>
+      <div class="footer-social">
+        <a href="#" class="social-link" id="social-facebook" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M18 10a8 8 0 1 0-9.25 7.9V12.7H6.9V10h1.85V8.15c0-1.83 1.09-2.84 2.76-2.84.8 0 1.63.14 1.63.14v1.8h-.92c-.9 0-1.18.56-1.18 1.13V10h2.02l-.32 2.7h-1.7V17.9A8 8 0 0 0 18 10Z"/></svg>
+        </a>
+        <a href="#" class="social-link" id="social-instagram" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="4"/><circle cx="14.5" cy="5.5" r="0.75" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-link" id="social-houzz" aria-label="Houzz">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2 L3 8v10h5v-5h4v5h5V8Z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 MGM Floors LLC. All rights reserved. | Chicago, IL</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const projects = [
+        {
+          folder: 'ChicagoHighrise',
+          provisionalTitle: 'Chicago High-Rise',
+          images: [
+            'assets/Projects/ChicagoHighrise/500880469_122105817038892859_468051460860379019_n.jpg',
+            'assets/Projects/ChicagoHighrise/501040555_122105816876892859_4241227073281256471_n.jpg',
+            'assets/Projects/ChicagoHighrise/501052886_122105816942892859_1954949411615595238_n.jpg',
+            'assets/Projects/ChicagoHighrise/504018500_122105817098892859_3111967109253267282_n.jpg',
+            'assets/Projects/ChicagoHighrise/504094993_122105816834892859_716772901970969150_n.jpg',
+            'assets/Projects/ChicagoHighrise/504111167_122105816990892859_2856605182935284360_n.jpg'
+          ]
+        },
+        {
+          folder: 'ChicagoHighrise2',
+          provisionalTitle: 'Chicago High-Rise II',
+          images: [
+            'assets/Projects/ChicagoHighrise2/503165533_122103653438892859_9007311478926869022_n.jpg',
+            'assets/Projects/ChicagoHighrise2/503527255_122103653390892859_7586521521054144439_n.jpg',
+            'assets/Projects/ChicagoHighrise2/503613802_122103653354892859_5131362198371624819_n.jpg'
+          ]
+        },
+        {
+          folder: 'CurvedEntryways',
+          provisionalTitle: 'Curved Entryways',
+          images: [
+            'assets/Projects/CurvedEntryways/502915029_122103606146892859_1758069958663501722_n.jpg',
+            'assets/Projects/CurvedEntryways/503193029_122103605954892859_2254986547944970375_n.jpg',
+            'assets/Projects/CurvedEntryways/503234556_122103609302892859_8886586755717116496_n.jpg',
+            'assets/Projects/CurvedEntryways/503273125_122103609260892859_4151459653072582311_n.jpg',
+            'assets/Projects/CurvedEntryways/503418418_122103606056892859_5431643287572763484_n.jpg',
+          ]
+        },
+        {
+          folder: 'DarkBrownWhitePosts',
+          provisionalTitle: 'Dark Brown Floors with White Posts',
+          images: [
+            'assets/Projects/DarkBrownWhitePosts/627859869_122162376686892859_6586415734915652830_n.jpg',
+            'assets/Projects/DarkBrownWhitePosts/627938002_122162376614892859_6756379744989965593_n.jpg',
+            'assets/Projects/DarkBrownWhitePosts/628276083_122162376536892859_3469959441017749064_n.jpg',
+            'assets/Projects/DarkBrownWhitePosts/628357107_122162376650892859_3876771286968824967_n.jpg',
+            'assets/Projects/DarkBrownWhitePosts/629307249_122162376500892859_5032601802802359466_n.jpg',
+            'assets/Projects/DarkBrownWhitePosts/629401439_122162376572892859_1646507541883934760_n.jpg'
+          ]
+        },
+        {
+          folder: 'LightWoodStairs',
+          provisionalTitle: 'Light Wood Stairs',
+          images: [
+            'assets/Projects/LightWoodStairs/503311825_122103623534892859_4591954553193614832_n.jpg',
+            'assets/Projects/LightWoodStairs/503507051_122103623210892859_1295400165250772280_n.jpg',
+            'assets/Projects/LightWoodStairs/503827586_122103623372892859_4378631643865738499_n.jpg'
+          ]
+        },
+        {
+          folder: 'WindowsCreamPosts',
+          provisionalTitle: 'Windows with Cream Posts',
+          images: [
+            'assets/Projects/WindowsCreamPosts/500908210_122105800448892859_7972364589734266_n.jpg',
+            'assets/Projects/WindowsCreamPosts/501156838_122105800520892859_42814162597420235_n.jpg',
+            'assets/Projects/WindowsCreamPosts/504004667_122105800388892859_4855246660029647666_n.jpg'
+          ]
+        },
+        {
+          folder: 'WorkingWindows',
+          provisionalTitle: 'Working Windows',
+          images: [
+            'assets/Projects/WorkingWindows/502893980_122103628382892859_7864788567170414243_n.jpg',
+            'assets/Projects/WorkingWindows/502903757_122103628220892859_411531174320461478_n.jpg',
+            'assets/Projects/WorkingWindows/502904609_122103628340892859_3281907104459348301_n.jpg',
+            'assets/Projects/WorkingWindows/503406594_122103627944892859_2071820558729142862_n.jpg'
+          ]
+        }
+      ];
+
+      const projectGrid = document.getElementById('portfolio-project-grid');
+
+      function createButton(className, label, text) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = className;
+        button.setAttribute('aria-label', label);
+        button.textContent = text;
+        return button;
+      }
+
+      projects.forEach(function (project, projectIndex) {
+        let currentIndex = 0;
+
+        const card = document.createElement('article');
+        const titleId = 'project-title-' + projectIndex;
+        card.className = 'project-card';
+        card.dataset.folder = project.folder;
+        card.setAttribute('aria-labelledby', titleId);
+
+        const carousel = document.createElement('div');
+        carousel.className = 'project-carousel';
+
+        const image = document.createElement('img');
+        image.loading = projectIndex < 2 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        carousel.appendChild(image);
+
+        const body = document.createElement('div');
+        body.className = 'project-card-body';
+
+        const title = document.createElement('h2');
+        title.id = titleId;
+        title.className = 'project-card-title';
+        title.textContent = project.provisionalTitle;
+
+        const confirmation = document.createElement('p');
+        confirmation.className = 'project-confirmation';
+        confirmation.textContent = 'Project details to be confirmed';
+
+        body.appendChild(title);
+        body.appendChild(confirmation);
+        card.appendChild(carousel);
+        card.appendChild(body);
+        projectGrid.appendChild(card);
+
+        let counter = null;
+        const dots = [];
+
+        function showSlide(index) {
+          currentIndex = (index + project.images.length) % project.images.length;
+          image.src = project.images[currentIndex];
+          image.alt = project.provisionalTitle + ', image ' + (currentIndex + 1) + ' of ' + project.images.length;
+
+          if (counter) {
+            counter.textContent = (currentIndex + 1) + ' / ' + project.images.length;
+          }
+
+          dots.forEach(function (dot, dotIndex) {
+            dot.setAttribute('aria-current', dotIndex === currentIndex ? 'true' : 'false');
+          });
+        }
+
+        if (project.images.length > 1) {
+          carousel.tabIndex = 0;
+          carousel.setAttribute('role', 'group');
+          carousel.setAttribute('aria-label', project.provisionalTitle + ' image carousel. Use the left and right arrow keys to change images.');
+
+          const previous = createButton(
+            'project-carousel-button project-carousel-button--prev',
+            'Previous image in ' + project.provisionalTitle,
+            '‹'
+          );
+          const next = createButton(
+            'project-carousel-button project-carousel-button--next',
+            'Next image in ' + project.provisionalTitle,
+            '›'
+          );
+
+          counter = document.createElement('span');
+          counter.className = 'project-counter';
+          counter.setAttribute('aria-live', 'polite');
+
+          const dotGroup = document.createElement('div');
+          dotGroup.className = 'project-dots';
+          dotGroup.setAttribute('role', 'group');
+          dotGroup.setAttribute('aria-label', 'Choose an image from ' + project.provisionalTitle);
+
+          project.images.forEach(function (_, dotIndex) {
+            const dot = createButton(
+              'project-dot',
+              'Show image ' + (dotIndex + 1) + ' of ' + project.images.length + ' in ' + project.provisionalTitle,
+              ''
+            );
+            dot.addEventListener('click', function () {
+              showSlide(dotIndex);
+            });
+            dots.push(dot);
+            dotGroup.appendChild(dot);
+          });
+
+          previous.addEventListener('click', function () {
+            showSlide(currentIndex - 1);
+          });
+
+          next.addEventListener('click', function () {
+            showSlide(currentIndex + 1);
+          });
+
+          carousel.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              showSlide(currentIndex - 1);
+            } else if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              showSlide(currentIndex + 1);
+            }
+          });
+
+          carousel.appendChild(previous);
+          carousel.appendChild(next);
+          carousel.appendChild(counter);
+          carousel.appendChild(dotGroup);
+        }
+
+        showSlide(0);
+      });
+
+      const projectToggleWrap = document.getElementById('portfolio-project-toggle-wrap');
+      const projectToggle = document.getElementById('portfolio-project-toggle');
+      const mobileProjectLimit = window.matchMedia('(max-width: 768px)');
+      const reducedProjectMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let projectsExpanded = false;
+
+      function getProjectLimit() {
+        return mobileProjectLimit.matches ? 3 : 4;
+      }
+
+      function updateProjectVisibility(animateRevealedCards) {
+        const cards = Array.from(projectGrid.querySelectorAll('.project-card'));
+        const limit = getProjectLimit();
+        const hasMoreProjects = cards.length > limit;
+
+        projectToggleWrap.hidden = !hasMoreProjects;
+        projectToggle.hidden = !hasMoreProjects;
+
+        if (!hasMoreProjects) {
+          projectsExpanded = false;
+        }
+
+        cards.forEach(function (card, index) {
+          const shouldHide = hasMoreProjects && !projectsExpanded && index >= limit;
+          const isBeingRevealed = card.hidden && !shouldHide;
+
+          card.hidden = shouldHide;
+          card.classList.remove('project-card--revealing');
+
+          if (isBeingRevealed && animateRevealedCards && !reducedProjectMotion.matches) {
+            card.classList.add('project-card--revealing');
+            card.addEventListener('animationend', function () {
+              card.classList.remove('project-card--revealing');
+            }, { once: true });
+          }
+        });
+
+        projectToggle.setAttribute('aria-expanded', String(hasMoreProjects && projectsExpanded));
+        projectToggle.textContent = projectsExpanded ? 'Show Fewer Projects' : 'View All Projects';
+      }
+
+      projectToggle.addEventListener('click', function () {
+        projectsExpanded = !projectsExpanded;
+        updateProjectVisibility(projectsExpanded);
+
+        if (!projectsExpanded) {
+          window.requestAnimationFrame(function () {
+            projectGrid.scrollIntoView({
+              behavior: reducedProjectMotion.matches ? 'auto' : 'smooth',
+              block: 'start'
+            });
+          });
+        }
+      });
+
+      function handleProjectBreakpointChange() {
+        updateProjectVisibility(false);
+      }
+
+      if (typeof mobileProjectLimit.addEventListener === 'function') {
+        mobileProjectLimit.addEventListener('change', handleProjectBreakpointChange);
+      } else {
+        mobileProjectLimit.addListener(handleProjectBreakpointChange);
+      }
+
+      updateProjectVisibility(false);
+
+      const navToggle = document.getElementById('nav-toggle');
+      const navLinks = document.getElementById('nav-links');
+
+      function closeMenu() {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        const lines = navToggle.querySelectorAll('.hamburger-line');
+        lines[0].style.transform = '';
+        lines[1].style.opacity = '';
+        lines[2].style.transform = '';
+      }
+
+      navToggle.addEventListener('click', function () {
+        const opening = !navLinks.classList.contains('open');
+        if (!opening) {
+          closeMenu();
+          return;
+        }
+
+        navLinks.classList.add('open');
+        navToggle.setAttribute('aria-expanded', 'true');
+        const lines = navToggle.querySelectorAll('.hamburger-line');
+        lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        lines[1].style.opacity = '0';
+        lines[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      });
+
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+          closeMenu();
+          navToggle.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

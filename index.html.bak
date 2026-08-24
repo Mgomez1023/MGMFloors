@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MGM Floors LLC — Premium Flooring Solutions in Chicago</title>
+  <meta name="description" content="MGM Floors LLC delivers premium hardwood installation, refinishing, epoxy, and tile flooring throughout the Chicago area. Transform your space with craftsmanship you can feel." />
+  <meta name="keywords" content="hardwood flooring Chicago, floor installation, floor refinishing, epoxy floors, tile flooring, MGM Floors" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo" id="nav-logo-link" aria-label="MGM Floors home">
+        <img src="assets/Logo-transparent.png" alt="MGM Floors LLC Logo" class="nav-logo-img" />
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#services" class="nav-link" id="nav-services">Services</a></li>
+        <li><a href="#gallery" class="nav-link" id="nav-gallery">Gallery</a></li>
+        <li><a href="#about" class="nav-link" id="nav-about">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="hero">
+    <div class="hero-bg-slider" id="hero-bg-slider" aria-hidden="true">
+      <div class="hero-slide active" style="background-image: url('assets/02.jpg')"></div>
+      <div class="hero-slide" style="background-image: url('assets/16.jpg')"></div>
+      <div class="hero-slide" style="background-image: url('assets/12.jpg')"></div>
+      <div class="hero-slide" style="background-image: url('assets/10.jpg')"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">HARDWOOD FLOORING · CHICAGOLAND</p>
+      <h1 class="hero-headline">Beautiful Floors<br /><em>Built to Last</em></h1>
+      <p class="hero-sub">Premium hardwood, epoxy, tile &amp; refinishing — installed with precision and finished to perfection.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary" id="hero-quote-btn">Get a Free Quote</a>
+        <a href="#gallery" class="btn btn-ghost" id="hero-gallery-btn">View Our Work</a>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <span class="scroll-line"></span>
+    </div>
+    <div class="hero-slide-dots" id="hero-slide-dots" aria-label="Slide indicators" role="group">
+      <button class="slide-dot active" data-index="0" aria-label="Slide 1"></button>
+      <button class="slide-dot" data-index="1" aria-label="Slide 2"></button>
+      <button class="slide-dot" data-index="2" aria-label="Slide 3"></button>
+      <button class="slide-dot" data-index="3" aria-label="Slide 4"></button>
+    </div>
+  </section>
+
+  <!-- ===== COMPACT SERVICES STRIP ===== -->
+  <section id="services" class="services-strip" aria-label="Our Services">
+    <div class="container services-strip-layout">
+      <ul class="services-strip-list" role="list">
+        <li>
+          <svg class="services-strip-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6.5h18v3H3zM3 10.5h18v3H3zM3 14.5h18v3H3zM8 6.5v3m7 1v3m-5 1v3" />
+          </svg>
+          <span>Hardwood Installation</span>
+        </li>
+        <li>
+          <svg class="services-strip-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m5 16 8.6-8.6 3 3L8 19H5v-3Zm9.8-9.8 1.4-1.4a1.4 1.4 0 0 1 2 0l1 1a1.4 1.4 0 0 1 0 2l-1.4 1.4M3 20.5h18" />
+          </svg>
+          <span>Sanding, Refinishing &amp; Restoration</span>
+        </li>
+        <li>
+          <svg class="services-strip-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5s-5 5.7-5 10a5 5 0 0 0 10 0c0-4.3-5-10-5-10Zm-2.2 11a2.4 2.4 0 0 0 2.2 1.7" />
+          </svg>
+          <span>Epoxy &amp; Concrete Coatings</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== MGM PROCESS ===== -->
+  <section id="process" class="process-section" aria-labelledby="process-title">
+    <div class="process-stage">
+      <div class="container process-stage-inner">
+        <header class="process-header">
+          <p class="section-eyebrow">The MGM Process</p>
+          <h2 id="process-title" class="section-title">From First Conversation to Final Walkthrough</h2>
+        </header>
+
+        <ol class="process-list">
+          <li class="process-panel process-panel--one">
+            <span class="process-number" aria-hidden="true">01</span>
+            <div>
+              <h3>Consultation</h3>
+              <p>[Placeholder — process details require business confirmation.]</p>
+            </div>
+          </li>
+          <li class="process-panel process-panel--two">
+            <span class="process-number" aria-hidden="true">02</span>
+            <div>
+              <h3>On-Site Assessment</h3>
+              <p>[Placeholder — process details require business confirmation.]</p>
+            </div>
+          </li>
+          <li class="process-panel process-panel--three">
+            <span class="process-number" aria-hidden="true">03</span>
+            <div>
+              <h3>Proposal &amp; Scheduling</h3>
+              <p>[Placeholder — process details require business confirmation.]</p>
+            </div>
+          </li>
+          <li class="process-panel process-panel--four">
+            <span class="process-number" aria-hidden="true">04</span>
+            <div>
+              <h3>Craftsmanship &amp; Final Walkthrough</h3>
+              <p>[Placeholder — process details require business confirmation.]</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="process-cta">
+          <a href="#contact" class="btn btn-primary">Request a Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS STRIP ===== -->
+  <section class="stats-strip" aria-label="Company highlights">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-number-wrap">
+          <span class="stat-number" data-target="500">0</span><span class="stat-plus">+</span>
+        </div>
+        <span class="stat-label">Projects Completed</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <div class="stat-number-wrap">
+          <span class="stat-number" data-target="15">0</span><span class="stat-plus">+</span>
+        </div>
+        <span class="stat-label">Years of Experience</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <div class="stat-number-wrap">
+          <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
+        </div>
+        <span class="stat-label">Satisfaction Rate</span>
+      </div>
+      <div class="stat-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <div class="stat-number-wrap">
+          <span class="stat-number" data-target="5">0</span><span class="stat-plus">&#9733;</span>
+        </div>
+        <span class="stat-label">Google Rating</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="gallery" class="gallery section-padding section-alt">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Our Portfolio</p>
+        <h2 class="section-title">Recent Work</h2>
+        <p class="section-desc">A glimpse of our craftsmanship across residential and commercial projects throughout the Chicago area.</p>
+      </div>
+
+      <div class="gallery-filters" role="group" aria-label="Filter gallery by category">
+        <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+        <button class="filter-btn" data-filter="hardwood" id="filter-hardwood">Hardwood</button>
+        <button class="filter-btn" data-filter="epoxy" id="filter-epoxy">Epoxy</button>
+        <button class="filter-btn" data-filter="tile" id="filter-tile">Tile</button>
+        <button class="filter-btn" data-filter="commercial" id="filter-commercial">Commercial</button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid">
+
+        <div class="gallery-item gallery-item--large" data-category="commercial" id="gal-6">
+          <img src="assets/07.jpg" alt="Light grey hardwood in high-rise luxury condo" loading="lazy" />
+          <div class="gallery-overlay"><span>High-Rise — Commercial</span></div>
+        </div>
+        <div class="gallery-item" data-category="epoxy" id="gal-5">
+          <img src="assets/06.jpg" alt="High-gloss epoxy floor coating" loading="lazy" />
+          <div class="gallery-overlay"><span>Epoxy Coating</span></div>
+        </div>
+        
+        <div class="gallery-item" data-category="commercial" id="gal-8">
+          <img src="assets/09.jpg" alt="Dark hardwood in high-rise apartment" loading="lazy" />
+          <div class="gallery-overlay"><span>Dark Walnut — High-Rise</span></div>
+        </div>
+        <div class="gallery-item" data-category="hardwood" id="gal-12">
+          <img src="assets/CurvedArches.jpg" alt="White oak floor with curved archway framing" loading="lazy" />
+          <div class="gallery-overlay"><span>White Oak — Arched Entry</span></div>
+        </div>
+        <div class="gallery-item" data-category="hardwood" id="gal-4">
+          <img src="assets/05.jpg" alt="Warm oak hardwood with matching baseboards" loading="lazy" />
+          <div class="gallery-overlay"><span>Oak — Natural Finish</span></div>
+        </div>
+      </div>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">&#10005;</button>
+        <button class="lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#8249;</button>
+        <button class="lightbox-next" id="lightbox-next" aria-label="Next image">&#8250;</button>
+        <div class="lightbox-img-wrap">
+          <img src="" alt="" id="lightbox-img" />
+          <p class="lightbox-caption" id="lightbox-caption"></p>
+        </div>
+      </div>
+
+      <div class="gallery-cta" style="text-align: center; margin-top: 3.5rem;">
+        <a href="portfolio.html" class="btn btn-primary" id="gallery-cta-btn">View Full Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="about section-padding">
+    <div class="container about-layout">
+      <div class="about-visuals" aria-hidden="true">
+        <div class="about-img-primary">
+          <img src="assets/13.jpg" alt="MGM Floors craftsman at work" loading="lazy" />
+        </div>
+        <div class="about-img-secondary">
+          <img src="assets/14.jpg" alt="Close-up of premium hardwood grain" loading="lazy" />
+        </div>
+        <div class="about-badge">
+          <span class="badge-number">15+</span>
+          <span class="badge-text">Years of<br/>Excellence</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <p class="section-eyebrow">Our Story</p>
+        <h2 class="section-title section-title--left">Built on Craft,<br /><em>Driven by Pride</em></h2>
+        <p class="about-text">MGM Floors LLC was founded on a simple belief: every home and business deserves floors that are both beautiful and built to last. Based in the Chicago area, we bring old-world craftsmanship to every project — whether it's a single-room hardwood install or a full commercial build-out.</p>
+        <p class="about-text">Our team of licensed professionals brings decades of combined experience across hardwood, luxury vinyl, epoxy, and tile. We source premium materials, use industry-leading techniques, and never cut corners — because your floors are the foundation of everything.</p>
+        <ul class="about-pillars" role="list">
+          <li class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">&#10022;</span>
+            <div>
+              <strong>Licensed &amp; Insured</strong>
+              <span>Full coverage so you never have to worry.</span>
+            </div>
+          </li>
+          <li class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">&#10022;</span>
+            <div>
+              <strong>Free In-Home Estimates</strong>
+              <span>No pressure, no surprises — just honest pricing.</span>
+            </div>
+          </li>
+          <li class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">&#10022;</span>
+            <div>
+              <strong>Satisfaction Guaranteed</strong>
+              <span>We're not done until you love your floors.</span>
+            </div>
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-primary" id="about-cta">Schedule Your Estimate</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials section-padding section-alt" aria-label="Customer testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">What Clients Say</p>
+        <h2 class="section-title">Real Results,<br /><em>Real Reviews</em></h2>
+      </div>
+      <div class="testimonials-track" id="testimonials-track">
+        <div class="testimonial-card" id="test-1">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote class="testimonial-text">"MGM Floors completely transformed our living room. The wide-plank white oak looks absolutely stunning and the craftsmanship is impeccable. Highly recommend to anyone looking for quality flooring in Chicago."</blockquote>
+          <cite class="testimonial-author">— Sarah M., Lincoln Park</cite>
+        </div>
+        <div class="testimonial-card" id="test-2">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote class="testimonial-text">"We had our 30-year-old hardwood floors refinished and they look brand new. The team was professional, on-time, and meticulous. Worth every penny — I wish we had done it sooner."</blockquote>
+          <cite class="testimonial-author">— James R., Naperville</cite>
+        </div>
+        <div class="testimonial-card" id="test-3">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote class="testimonial-text">"Used MGM for a large commercial project across two floors of our office. They finished on time, on budget, and the floor looks incredible. Already booked them for our second location."</blockquote>
+          <cite class="testimonial-author">— Derek T., Business Owner, Chicago Loop</cite>
+        </div>
+        <div class="testimonial-card" id="test-4">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote class="testimonial-text">"The epoxy garage floor coating they installed is phenomenal. It handles Chicago winters without a scratch. The team was knowledgeable and the price was very fair. Five stars all the way."</blockquote>
+          <cite class="testimonial-author">— Maria L., Elmhurst</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="contact section-padding">
+    <div class="container contact-layout">
+      <div class="contact-info">
+        <p class="section-eyebrow">Let's Talk Floors</p>
+        <h2 class="section-title section-title--left">Get Your<br /><em>Free Estimate</em></h2>
+        <p class="contact-intro">Ready to upgrade your space? Fill out the form and we'll get back to you within one business day with a no-obligation quote.</p>
+        <ul class="contact-details" role="list">
+          <li class="contact-detail-item" id="contact-phone">
+            <span class="contact-detail-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 2h3.5l1.5 4-2 1.5c1 2 2.5 3.5 4.5 4.5L12 10l4 1.5V15c0 1-1 2-2 1.5C7 14.5 3 8 2.5 5 2 3 2 2 3 2z" fill="currentColor"/></svg>
+            </span>
+            <div>
+              <span class="contact-detail-label">Phone</span>
+              <a href="tel:+17735551234" class="contact-detail-value">(773) 555-1234</a>
+            </div>
+          </li>
+          <li class="contact-detail-item" id="contact-email">
+            <span class="contact-detail-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M2 6 L10 11 L18 6" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+            <div>
+              <span class="contact-detail-label">Email</span>
+              <a href="mailto:info@mgmfloors.com" class="contact-detail-value">info@mgmfloors.com</a>
+            </div>
+          </li>
+          <li class="contact-detail-item" id="contact-location">
+            <span class="contact-detail-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a6 6 0 0 1 6 6c0 4-6 10-6 10S4 12 4 8a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="10" cy="8" r="2" fill="currentColor"/></svg>
+            </span>
+            <div>
+              <span class="contact-detail-label">Service Area</span>
+              <span class="contact-detail-value">Chicago &amp; Surrounding Suburbs</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-name">Full Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="form-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="form-phone">Phone Number</label>
+            <input type="tel" id="form-phone" name="phone" placeholder="(312) 000-0000" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="form-email">Email Address <span aria-hidden="true">*</span></label>
+          <input type="email" id="form-email" name="email" placeholder="jane@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="form-service">Service Interested In</label>
+          <select id="form-service" name="service">
+            <option value="" disabled selected>Select a service&hellip;</option>
+            <option value="hardwood-install">Hardwood Installation</option>
+            <option value="refinishing">Sanding &amp; Refinishing</option>
+            <option value="epoxy">Epoxy &amp; Concrete Coating</option>
+            <option value="tile">Tile &amp; Stone</option>
+            <option value="lvp">Luxury Vinyl Plank</option>
+            <option value="commercial">Commercial Flooring</option>
+            <option value="other">Other / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="form-message">Tell Us About Your Project</label>
+          <textarea id="form-message" name="message" rows="4" placeholder="Square footage, current flooring, timeline&hellip;"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="form-submit">Send My Request &rarr;</button>
+        <p class="form-note">No spam, ever. We'll only contact you about your project.</p>
+        <div class="form-success" id="form-success" role="status" aria-live="polite" hidden>
+          <span>&#10003;</span> Thank you! We'll be in touch within one business day.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-layout">
+      <div class="footer-brand">
+        <img src="assets/Logo.png" alt="MGM Floors LLC" class="footer-logo" />
+        <p class="footer-tagline">Premium floors. Lasting impressions.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#services" class="footer-link">Services</a>
+        <a href="#gallery" class="footer-link">Gallery</a>
+        <a href="#about" class="footer-link">About</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </nav>
+      <div class="footer-social">
+        <a href="#" class="social-link" id="social-facebook" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M18 10a8 8 0 1 0-9.25 7.9V12.7H6.9V10h1.85V8.15c0-1.83 1.09-2.84 2.76-2.84.8 0 1.63.14 1.63.14v1.8h-.92c-.9 0-1.18.56-1.18 1.13V10h2.02l-.32 2.7h-1.7V17.9A8 8 0 0 0 18 10Z"/></svg>
+        </a>
+        <a href="#" class="social-link" id="social-instagram" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="4"/><circle cx="10" cy="10" r="4"/><circle cx="14.5" cy="5.5" r="0.75" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-link" id="social-houzz" aria-label="Houzz">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2 L3 8v10h5v-5h4v5h5V8Z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 MGM Floors LLC. All rights reserved. | Chicago, IL</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
