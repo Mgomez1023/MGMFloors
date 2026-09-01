@@ -252,6 +252,50 @@
     });
   });
 
+  /* ===== MOBILE SERVICES SELECTOR ===== */
+  const mobileServices = document.querySelector('.services-mobile');
+  const mobileServiceTabs = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tab"]')) : [];
+  const mobileServicePanels = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tabpanel"]')) : [];
+
+  function activateMobileService(index, moveFocus) {
+    mobileServiceTabs.forEach(function (tab, tabIndex) {
+      const isActive = tabIndex === index;
+      tab.setAttribute('aria-selected', String(isActive));
+      tab.setAttribute('tabindex', isActive ? '0' : '-1');
+      if (moveFocus && isActive) tab.focus({ preventScroll: true });
+    });
+
+    mobileServicePanels.forEach(function (panel, panelIndex) {
+      panel.hidden = panelIndex !== index;
+    });
+  }
+
+  if (mobileServices && mobileServiceTabs.length === mobileServicePanels.length && mobileServiceTabs.length > 0) {
+    mobileServices.classList.add('is-enhanced');
+    activateMobileService(0, false);
+
+    mobileServiceTabs.forEach(function (tab, index) {
+      tab.addEventListener('click', function () {
+        activateMobileService(index, false);
+      });
+
+      tab.addEventListener('keydown', function (e) {
+        let nextIndex = index;
+
+        if (e.key === 'ArrowRight') nextIndex = (index + 1) % mobileServiceTabs.length;
+        else if (e.key === 'ArrowLeft') nextIndex = (index - 1 + mobileServiceTabs.length) % mobileServiceTabs.length;
+        else if (e.key === 'ArrowDown') nextIndex = (index + 2) % mobileServiceTabs.length;
+        else if (e.key === 'ArrowUp') nextIndex = (index - 2 + mobileServiceTabs.length) % mobileServiceTabs.length;
+        else if (e.key === 'Home') nextIndex = 0;
+        else if (e.key === 'End') nextIndex = mobileServiceTabs.length - 1;
+        else return;
+
+        e.preventDefault();
+        activateMobileService(nextIndex, true);
+      });
+    });
+  }
+
   /* ===== SCROLL REVEAL ===== */
   const revealEls = document.querySelectorAll(
     '.gallery-item, .testimonial-card, .about-visuals, .about-content, .contact-info, .section-header'
