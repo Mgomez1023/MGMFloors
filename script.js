@@ -256,6 +256,17 @@
   const mobileServices = document.querySelector('.services-mobile');
   const mobileServiceTabs = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tab"]')) : [];
   const mobileServicePanels = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tabpanel"]')) : [];
+  const mobileServiceDetailLink = mobileServices ? mobileServices.querySelector('.mobile-service-detail-link') : null;
+  const mobileServiceLinks = [
+    { text: 'Explore Hardwood Installation', href: 'services/hardwood-floor-installation/' },
+    { text: 'Ask About Floor Refinishing', href: '#contact' },
+    { text: 'Discuss Hardwood Floor Repair', href: '#contact' },
+    { text: 'Ask About Engineered Hardwood', href: '#contact' },
+    { text: 'Explore Custom Stain Options', href: '#contact' },
+    { text: 'Discuss Staircase Refinishing', href: '#contact' },
+    { text: 'Ask About Floor Restoration', href: '#contact' },
+    { text: 'Discuss Residential & Commercial Flooring', href: '#contact' }
+  ];
 
   function activateMobileService(index, moveFocus) {
     mobileServiceTabs.forEach(function (tab, tabIndex) {
@@ -268,6 +279,11 @@
     mobileServicePanels.forEach(function (panel, panelIndex) {
       panel.hidden = panelIndex !== index;
     });
+
+    if (mobileServiceDetailLink && mobileServiceLinks[index]) {
+      mobileServiceDetailLink.firstChild.nodeValue = mobileServiceLinks[index].text + ' ';
+      mobileServiceDetailLink.setAttribute('href', mobileServiceLinks[index].href);
+    }
   }
 
   if (mobileServices && mobileServiceTabs.length === mobileServicePanels.length && mobileServiceTabs.length > 0) {
@@ -295,6 +311,27 @@
       });
     });
   }
+
+  /* ===== BEFORE / AFTER COMPARISON ===== */
+  const comparisonSliders = document.querySelectorAll('[data-comparison-slider]');
+
+  comparisonSliders.forEach(function (slider) {
+    const range = slider.querySelector('.comparison-range');
+    if (!range) return;
+
+    function updateComparison() {
+      const value = Math.max(5, Math.min(95, Number(range.value)));
+      const afterAmount = 100 - value;
+      slider.style.setProperty('--comparison-position', value + '%');
+      range.setAttribute('aria-valuetext', value + '% before image and ' + afterAmount + '% after image');
+    }
+
+    range.addEventListener('input', updateComparison);
+    range.addEventListener('dragstart', function (e) {
+      e.preventDefault();
+    });
+    updateComparison();
+  });
 
   /* ===== SCROLL REVEAL ===== */
   const revealEls = document.querySelectorAll(
