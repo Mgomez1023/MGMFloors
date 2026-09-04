@@ -2768,6 +2768,10 @@ a.contact-detail-value:hover {
   line-height: 1.8;
 }
 
+.no-js .service-faq-answer[hidden] {
+  display: block !important;
+}
+
 .service-related-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -2,6 +2,8 @@
 (function () {
   'use strict';
 
+  document.documentElement.classList.remove('no-js');
+
   const navToggle = document.getElementById('nav-toggle');
   const navLinks = document.getElementById('nav-links');
 

@@ -258,14 +258,14 @@
   const mobileServicePanels = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tabpanel"]')) : [];
   const mobileServiceDetailLink = mobileServices ? mobileServices.querySelector('.mobile-service-detail-link') : null;
   const mobileServiceLinks = [
-    { text: 'Explore Hardwood Installation', href: 'services/hardwood-floor-installation/' },
-    { text: 'Ask About Floor Refinishing', href: '#contact' },
-    { text: 'Discuss Hardwood Floor Repair', href: '#contact' },
-    { text: 'Ask About Engineered Hardwood', href: '#contact' },
-    { text: 'Explore Custom Stain Options', href: '#contact' },
-    { text: 'Discuss Staircase Refinishing', href: '#contact' },
-    { text: 'Ask About Floor Restoration', href: '#contact' },
-    { text: 'Discuss Residential & Commercial Flooring', href: '#contact' }
+    { text: 'Explore Hardwood Installation', href: '/services/hardwood-floor-installation/' },
+    { text: 'Explore Floor Refinishing', href: '/services/hardwood-floor-refinishing/' },
+    { text: 'Explore Hardwood Floor Repair', href: '/services/hardwood-floor-repair/' },
+    { text: 'Explore Engineered Hardwood', href: '/services/engineered-hardwood-installation/' },
+    { text: 'Explore Custom Stain Options', href: '/services/custom-staining-color-matching/' },
+    { text: 'Explore Staircase Refinishing', href: '/services/staircase-refinishing/' },
+    { text: 'Explore Floor Restoration', href: '/services/floor-restoration/' },
+    { text: 'Explore Residential & Commercial Flooring', href: '/services/residential-commercial-flooring/' }
   ];
 
   function activateMobileService(index, moveFocus) {
