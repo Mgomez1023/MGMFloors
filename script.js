@@ -252,66 +252,6 @@
     });
   });
 
-  /* ===== MOBILE SERVICES SELECTOR ===== */
-  const mobileServices = document.querySelector('.services-mobile');
-  const mobileServiceTabs = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tab"]')) : [];
-  const mobileServicePanels = mobileServices ? Array.from(mobileServices.querySelectorAll('[role="tabpanel"]')) : [];
-  const mobileServiceDetailLink = mobileServices ? mobileServices.querySelector('.mobile-service-detail-link') : null;
-  const mobileServiceLinks = [
-    { text: 'Explore Hardwood Installation', href: '/services/hardwood-floor-installation/' },
-    { text: 'Explore Floor Refinishing', href: '/services/hardwood-floor-refinishing/' },
-    { text: 'Explore Hardwood Floor Repair', href: '/services/hardwood-floor-repair/' },
-    { text: 'Explore Engineered Hardwood', href: '/services/engineered-hardwood-installation/' },
-    { text: 'Explore Custom Stain Options', href: '/services/custom-staining-color-matching/' },
-    { text: 'Explore Staircase Refinishing', href: '/services/staircase-refinishing/' },
-    { text: 'Explore Floor Restoration', href: '/services/floor-restoration/' },
-    { text: 'Explore Residential & Commercial Flooring', href: '/services/residential-commercial-flooring/' }
-  ];
-
-  function activateMobileService(index, moveFocus) {
-    mobileServiceTabs.forEach(function (tab, tabIndex) {
-      const isActive = tabIndex === index;
-      tab.setAttribute('aria-selected', String(isActive));
-      tab.setAttribute('tabindex', isActive ? '0' : '-1');
-      if (moveFocus && isActive) tab.focus({ preventScroll: true });
-    });
-
-    mobileServicePanels.forEach(function (panel, panelIndex) {
-      panel.hidden = panelIndex !== index;
-    });
-
-    if (mobileServiceDetailLink && mobileServiceLinks[index]) {
-      mobileServiceDetailLink.firstChild.nodeValue = mobileServiceLinks[index].text + ' ';
-      mobileServiceDetailLink.setAttribute('href', mobileServiceLinks[index].href);
-    }
-  }
-
-  if (mobileServices && mobileServiceTabs.length === mobileServicePanels.length && mobileServiceTabs.length > 0) {
-    mobileServices.classList.add('is-enhanced');
-    activateMobileService(0, false);
-
-    mobileServiceTabs.forEach(function (tab, index) {
-      tab.addEventListener('click', function () {
-        activateMobileService(index, false);
-      });
-
-      tab.addEventListener('keydown', function (e) {
-        let nextIndex = index;
-
-        if (e.key === 'ArrowRight') nextIndex = (index + 1) % mobileServiceTabs.length;
-        else if (e.key === 'ArrowLeft') nextIndex = (index - 1 + mobileServiceTabs.length) % mobileServiceTabs.length;
-        else if (e.key === 'ArrowDown') nextIndex = (index + 2) % mobileServiceTabs.length;
-        else if (e.key === 'ArrowUp') nextIndex = (index - 2 + mobileServiceTabs.length) % mobileServiceTabs.length;
-        else if (e.key === 'Home') nextIndex = 0;
-        else if (e.key === 'End') nextIndex = mobileServiceTabs.length - 1;
-        else return;
-
-        e.preventDefault();
-        activateMobileService(nextIndex, true);
-      });
-    });
-  }
-
   /* ===== BEFORE / AFTER COMPARISON ===== */
   const comparisonSliders = document.querySelectorAll('[data-comparison-slider]');
 
@@ -320,7 +260,7 @@
     if (!range) return;
 
     function updateComparison() {
-      const value = Math.max(5, Math.min(95, Number(range.value)));
+      const value = Math.max(0, Math.min(100, Number(range.value)));
       const afterAmount = 100 - value;
       slider.style.setProperty('--comparison-position', value + '%');
       range.setAttribute('aria-valuetext', value + '% before image and ' + afterAmount + '% after image');
@@ -333,9 +273,171 @@
     updateComparison();
   });
 
+  /* ===== SERVICES RAIL ===== */
+  const servicesRail = document.querySelector('[data-services-rail]');
+  const servicesTrack = document.querySelector('[data-services-track]');
+  const servicesRailShell = document.querySelector('[data-services-rail-shell]');
+  const servicesPrev = document.querySelector('[data-services-prev]');
+  const servicesNext = document.querySelector('[data-services-next]');
+
+  if (servicesRail && servicesTrack) {
+    const originalCards = Array.from(servicesTrack.children);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let loopWidth = 0;
+    let isPaused = false;
+    let isDragging = false;
+    let dragMoved = false;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+    let lastFrame = performance.now();
+    let resumeTimer;
+
+    originalCards.forEach(function (card) {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
+      clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach(function (element) {
+        element.setAttribute('tabindex', '-1');
+      });
+      servicesTrack.appendChild(clone);
+    });
+
+    function measureLoop() {
+      const firstClone = servicesTrack.children[originalCards.length];
+      loopWidth = firstClone ? firstClone.offsetLeft - servicesTrack.children[0].offsetLeft : 0;
+      updateRailAffordances();
+    }
+
+    function updateRailAffordances() {
+      if (!servicesRailShell) return;
+      const canScrollLeft = servicesRail.scrollLeft > 3;
+      const canScrollRight = servicesRail.scrollWidth - servicesRail.clientWidth - servicesRail.scrollLeft > 3;
+      servicesRailShell.classList.toggle('can-scroll-left', canScrollLeft);
+      servicesRailShell.classList.toggle('can-scroll-right', canScrollRight);
+
+      if (servicesPrev) {
+        servicesPrev.disabled = !canScrollLeft;
+        servicesPrev.setAttribute('aria-hidden', String(!canScrollLeft));
+      }
+      if (servicesNext) {
+        servicesNext.disabled = !canScrollRight;
+        servicesNext.setAttribute('aria-hidden', String(!canScrollRight));
+      }
+    }
+
+    function pauseRail() {
+      isPaused = true;
+      window.clearTimeout(resumeTimer);
+      servicesRail.classList.remove('is-autoplaying');
+    }
+
+    function resumeRail(delay) {
+      window.clearTimeout(resumeTimer);
+      resumeTimer = window.setTimeout(function () {
+        isPaused = false;
+        lastFrame = performance.now();
+        if (!reducedMotion.matches) servicesRail.classList.add('is-autoplaying');
+      }, delay || 0);
+    }
+
+    function normalizeScroll() {
+      if (!loopWidth) return;
+      while (servicesRail.scrollLeft >= loopWidth) servicesRail.scrollLeft -= loopWidth;
+      while (servicesRail.scrollLeft < 0) servicesRail.scrollLeft += loopWidth;
+      updateRailAffordances();
+    }
+
+    function animateRail(now) {
+      const canAutoplay = !reducedMotion.matches;
+      const autoplayActive = canAutoplay && !isPaused && !isDragging && Boolean(loopWidth);
+      servicesRail.classList.toggle('is-autoplaying', autoplayActive);
+      if (autoplayActive) {
+        servicesRail.scrollLeft += Math.min(now - lastFrame, 32) * 0.036;
+        normalizeScroll();
+      }
+      lastFrame = now;
+      window.requestAnimationFrame(animateRail);
+    }
+
+    const servicesInteractionArea = servicesRailShell || servicesRail;
+    servicesInteractionArea.addEventListener('mouseenter', pauseRail);
+    servicesInteractionArea.addEventListener('mouseleave', function () { resumeRail(250); });
+    servicesInteractionArea.addEventListener('focusin', pauseRail);
+    servicesInteractionArea.addEventListener('focusout', function () { resumeRail(600); });
+    servicesRail.addEventListener('wheel', function () {
+      pauseRail();
+      resumeRail(1200);
+    }, { passive: true });
+    servicesRail.addEventListener('scroll', updateRailAffordances, { passive: true });
+
+    function scrollRailByCard(direction) {
+      const firstCard = servicesTrack.children[0];
+      const secondCard = servicesTrack.children[1];
+      const cardStep = firstCard && secondCard ? secondCard.offsetLeft - firstCard.offsetLeft : servicesRail.clientWidth * 0.8;
+      pauseRail();
+      servicesRail.scrollBy({
+        left: direction * cardStep,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
+      });
+      resumeRail(1500);
+    }
+
+    if (servicesPrev) {
+      servicesPrev.addEventListener('pointerdown', pauseRail);
+      servicesPrev.addEventListener('click', function () { scrollRailByCard(-1); });
+    }
+
+    if (servicesNext) {
+      servicesNext.addEventListener('pointerdown', pauseRail);
+      servicesNext.addEventListener('click', function () { scrollRailByCard(1); });
+    }
+
+    servicesRail.addEventListener('pointerdown', function (e) {
+      pauseRail();
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      isDragging = true;
+      dragMoved = false;
+      dragStartX = e.clientX;
+      dragStartScroll = servicesRail.scrollLeft;
+      servicesRail.classList.add('is-dragging');
+      servicesRail.setPointerCapture(e.pointerId);
+    });
+
+    servicesRail.addEventListener('pointermove', function (e) {
+      if (!isDragging) return;
+      const distance = e.clientX - dragStartX;
+      if (Math.abs(distance) > 4) dragMoved = true;
+      servicesRail.scrollLeft = dragStartScroll - distance;
+      normalizeScroll();
+    });
+
+    function endRailDrag(e) {
+      if (isDragging && servicesRail.hasPointerCapture(e.pointerId)) {
+        servicesRail.releasePointerCapture(e.pointerId);
+      }
+      isDragging = false;
+      servicesRail.classList.remove('is-dragging');
+      resumeRail(e.pointerType === 'touch' ? 1500 : 900);
+    }
+
+    servicesRail.addEventListener('pointerup', endRailDrag);
+    servicesRail.addEventListener('pointercancel', endRailDrag);
+    servicesRail.addEventListener('click', function (e) {
+      if (dragMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragMoved = false;
+      }
+    }, true);
+
+    window.addEventListener('resize', measureLoop);
+    measureLoop();
+    window.requestAnimationFrame(animateRail);
+  }
+
   /* ===== SCROLL REVEAL ===== */
   const revealEls = document.querySelectorAll(
-    '.gallery-item, .testimonial-card, .about-visuals, .about-content, .contact-info, .section-header'
+    '.gallery-item, .testimonial-card, .about-img-primary, .about-img-secondary, .about-story-intro, .about-proof-item, .about-story-link, .contact-info, .section-header'
   );
 
   revealEls.forEach(function (el) {
