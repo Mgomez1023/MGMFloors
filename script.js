@@ -93,46 +93,6 @@
     startSlider();
   }
 
-  /* ===== STAT COUNTERS ===== */
-  const statNumbers = document.querySelectorAll('.stat-number');
-  let statsAnimated = false;
-
-  function easeOutQuad(t) {
-    return t * (2 - t);
-  }
-
-  function animateCounter(el, target, duration) {
-    const start = performance.now();
-
-    function step(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutQuad(progress);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = target;
-      }
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  function checkStatsInView() {
-    if (statsAnimated) return;
-    const strip = document.querySelector('.stats-strip');
-    if (!strip) return;
-    const rect = strip.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 100) {
-      statsAnimated = true;
-      statNumbers.forEach(function (el) {
-        const target = parseInt(el.getAttribute('data-target'), 10);
-        animateCounter(el, target, 1800);
-      });
-    }
-  }
-
   /* ===== GALLERY FILTER ===== */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const galleryItems = document.querySelectorAll('.gallery-item');
@@ -287,15 +247,16 @@
     let isPaused = false;
     let isDragging = false;
     let dragMoved = false;
+    let dragPointerId = null;
     let dragStartX = 0;
     let dragStartScroll = 0;
+    const dragThreshold = 6;
     let lastFrame = performance.now();
     let resumeTimer;
 
     originalCards.forEach(function (card) {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
-      clone.setAttribute('inert', '');
       clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach(function (element) {
         element.setAttribute('tabindex', '-1');
       });
@@ -395,18 +356,24 @@
     servicesRail.addEventListener('pointerdown', function (e) {
       pauseRail();
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      isDragging = true;
+      dragPointerId = e.pointerId;
       dragMoved = false;
       dragStartX = e.clientX;
       dragStartScroll = servicesRail.scrollLeft;
-      servicesRail.classList.add('is-dragging');
-      servicesRail.setPointerCapture(e.pointerId);
     });
 
     servicesRail.addEventListener('pointermove', function (e) {
-      if (!isDragging) return;
+      if (dragPointerId !== e.pointerId) return;
       const distance = e.clientX - dragStartX;
-      if (Math.abs(distance) > 4) dragMoved = true;
+
+      if (!isDragging) {
+        if (Math.abs(distance) <= dragThreshold) return;
+        isDragging = true;
+        dragMoved = true;
+        servicesRail.classList.add('is-dragging');
+        servicesRail.setPointerCapture(e.pointerId);
+      }
+
       servicesRail.scrollLeft = dragStartScroll - distance;
       normalizeScroll();
     });
@@ -416,7 +383,13 @@
         servicesRail.releasePointerCapture(e.pointerId);
       }
       isDragging = false;
+      dragPointerId = null;
       servicesRail.classList.remove('is-dragging');
+      if (e.type === 'pointercancel') {
+        dragMoved = false;
+      } else if (dragMoved) {
+        window.setTimeout(function () { dragMoved = false; }, 0);
+      }
       resumeRail(e.pointerType === 'touch' ? 1500 : 900);
     }
 
@@ -575,7 +548,6 @@
 
   function runScrollUpdates() {
     updateNavbar();
-    checkStatsInView();
     checkReveal();
     updateProcessScroll();
     updateActiveNav();
