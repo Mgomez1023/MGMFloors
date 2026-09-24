@@ -592,6 +592,7 @@
   /* ===== CONTACT FORM ===== */
   const contactForm = document.getElementById('contact-form');
   const formSuccess = document.getElementById('form-success');
+  const formError = document.getElementById('form-error');
   const formSubmit = document.getElementById('form-submit');
   const contactFormToggle = document.getElementById('contact-form-toggle');
   const contactFormToggleLabel = document.getElementById('contact-form-toggle-label');
@@ -632,27 +633,33 @@
   }
 
   if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+    contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // Basic validation
-      const name = document.getElementById('form-name').value.trim();
-      const email = document.getElementById('form-email').value.trim();
+      if (!contactForm.reportValidity()) return;
 
-      if (!name || !email) {
-        document.getElementById(!name ? 'form-name' : 'form-email').focus();
-        return;
-      }
-
-      // Simulate submission
-      formSubmit.textContent = 'Sending\u2026';
+      formSuccess.hidden = true;
+      formError.hidden = true;
       formSubmit.disabled = true;
-      formSubmit.style.opacity = '0.7';
+      formSubmit.textContent = 'Sending…';
 
-      setTimeout(function () {
-        contactForm.style.display = 'none';
+      try {
+        const response = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (!response.ok) throw new Error('Submission failed');
+
+        contactForm.reset();
         formSuccess.hidden = false;
-      }, 1400);
+      } catch (error) {
+        formError.hidden = false;
+      } finally {
+        formSubmit.disabled = false;
+        formSubmit.textContent = 'Send My Request →';
+      }
     });
   }
 

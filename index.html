@@ -458,30 +458,33 @@
         </button>
         <div class="contact-form-panel" id="contact-form-panel">
           <div class="contact-form-panel-inner">
-            <form class="contact-form" id="contact-form" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="form-name">Full Name <span aria-hidden="true">*</span></label>
-            <input type="text" id="form-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
-          </div>
-          <div class="form-group">
-            <label for="form-phone">Phone Number</label>
-            <input type="tel" id="form-phone" name="phone" placeholder="(312) 000-0000" autocomplete="tel" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="form-email">Email Address <span aria-hidden="true">*</span></label>
-          <input type="email" id="form-email" name="email" placeholder="jane@example.com" required autocomplete="email" />
-        </div>
-        <div class="form-group">
-          <label for="form-message">Tell Us About Your Project</label>
-          <textarea id="form-message" name="message" rows="4" placeholder="Square footage, current flooring, timeline&hellip;"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full" id="form-submit">Send My Request &rarr;</button>
-        <p class="form-note">No spam, ever. We'll only contact you about your project.</p>
-        <div class="form-success" id="form-success" role="status" aria-live="polite" hidden>
-          <span>&#10003;</span> Thank you! We'll be in touch within one business day.
-        </div>
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/mwlpbjeq" method="POST">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="form-name">Full Name <span aria-hidden="true">*</span></label>
+                  <input type="text" id="form-name" name="name" placeholder="Jane Smith" required autocomplete="name" />
+                </div>
+                <div class="form-group">
+                  <label for="form-phone">Phone Number</label>
+                  <input type="tel" id="form-phone" name="phone" placeholder="(312) 000-0000" autocomplete="tel" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="form-email">Email Address <span aria-hidden="true">*</span></label>
+                <input type="email" id="form-email" name="email" placeholder="jane@example.com" required autocomplete="email" />
+              </div>
+              <div class="form-group">
+                <label for="form-message">Tell Us About Your Project</label>
+                <textarea id="form-message" name="message" rows="4" placeholder="Square footage, current flooring, timeline&hellip;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full" id="form-submit">Send My Request &rarr;</button>
+              <p class="form-note">No spam, ever. We'll only contact you about your project.</p>
+              <div class="form-success" id="form-success" role="status" aria-live="polite" hidden>
+                <span>&#10003;</span> Thank you! We'll be in touch within one business day.
+              </div>
+              <p id="form-error" role="alert" hidden>
+                We couldn't send your request. Please try again or call (773) 636-6900.
+              </p>
             </form>
           </div>
         </div>
