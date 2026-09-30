@@ -600,6 +600,39 @@
   const contactLayout = document.querySelector('.contact-layout');
   let contactPanelTimer;
 
+  const attributionStorageKey = 'mgm_attribution_v1';
+  const attributionFieldNames = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_content',
+    'landing_page',
+    'referrer'
+  ];
+  const urlParams = new URLSearchParams(window.location.search);
+  let attribution = {
+    utm_source: urlParams.get('utm_source') || '',
+    utm_medium: urlParams.get('utm_medium') || '',
+    utm_campaign: urlParams.get('utm_campaign') || '',
+    utm_content: urlParams.get('utm_content') || '',
+    landing_page: window.location.pathname,
+    referrer: document.referrer || 'direct'
+  };
+
+  try {
+    const storedAttribution = sessionStorage.getItem(attributionStorageKey);
+    if (storedAttribution !== null) {
+      const parsedAttribution = JSON.parse(storedAttribution);
+      if (parsedAttribution && typeof parsedAttribution === 'object') {
+        attribution = parsedAttribution;
+      }
+    } else {
+      sessionStorage.setItem(attributionStorageKey, JSON.stringify(attribution));
+    }
+  } catch (error) {
+    // Keep the page-level attribution if sessionStorage is unavailable.
+  }
+
   if (contactFormToggle && contactFormPanel && contactLayout) {
     contactLayout.classList.add('is-collapsible');
     contactFormPanel.hidden = true;
@@ -644,6 +677,11 @@
       formSubmit.textContent = 'Sending…';
 
       try {
+        attributionFieldNames.forEach(function (fieldName) {
+          document.getElementById(fieldName).value = attribution[fieldName] || '';
+        });
+        document.getElementById('submitted_at').value = new Date().toISOString();
+
         const response = await fetch(contactForm.action, {
           method: 'POST',
           body: new FormData(contactForm),
